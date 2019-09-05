@@ -1,7 +1,7 @@
 {
-  "name": "mobx-rest-axios-adapter",
-  "version": "0.0.1",
-  "description": "axios adapter for mobx-rest",
+  "name": "factorial-mobx-rest-axios-adapter",
+  "version": "0.0.2",
+  "description": "official axios adapter for mobx-rest",
   "repository": {
     "type": "git",
     "url": "git@github.com:factorialco/mobx-rest-axios-adapter.git"

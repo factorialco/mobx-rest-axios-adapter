@@ -57,7 +57,7 @@ describe('adapter', () => {
             'SomeHeader': 'test'
           })
           expect(params).toEqual({ manager_id: 2 })
-          expect(data).toEqual(null)
+          expect(data).toEqual(undefined)
           expect(withCredentials).toEqual(true)
         })
       })
@@ -108,7 +108,7 @@ describe('adapter', () => {
             'Content-Type': 'application/json;charset=utf-8',
             'SomeHeader': 'test'
           })
-          expect(params).toEqual(null)
+          expect(params).toEqual(undefined)
           expect(data).toEqual('{"name":"paco"}')
           expect(withCredentials).toEqual(true)
         })
@@ -128,6 +128,34 @@ describe('adapter', () => {
         expect(ret.abort).toBeTruthy()
 
         return expect(ret.promise).rejects.toEqual(['foo'])
+      })
+    })
+
+    describe('when it does not contain data', () => {
+      const values = { id: 1, avatar: 'lol.png' }
+
+      beforeEach(() => {
+        data = undefined
+        mock.onPost('/api/users').reply(200, values)
+        action()
+      })
+
+      it('sends a xhr request with data parameters', () => {
+        expect(ret.abort).toBeTruthy()
+
+        return ret.promise.then((vals) => {
+          expect(vals).toEqual(values)
+
+          const { params, data, headers, withCredentials } = getLastRequest('post')
+          expect(headers).toEqual({
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'SomeHeader': 'test'
+          })
+          expect(params).toEqual(undefined)
+          expect(data).toEqual(undefined)
+          expect(withCredentials).toEqual(true)
+        })
       })
     })
 
@@ -152,7 +180,7 @@ describe('adapter', () => {
             'Content-Type': 'application/x-www-form-urlencoded',
             'SomeHeader': 'test'
           })
-          expect(params).toEqual(null)
+          expect(params).toEqual(undefined)
           expect(Array.from(data.keys())).toEqual(['avatar'])
           expect(withCredentials).toEqual(true)
         })
@@ -180,7 +208,7 @@ describe('adapter', () => {
             'Content-Type': 'application/x-www-form-urlencoded',
             'SomeHeader': 'test'
           })
-          expect(params).toEqual(null)
+          expect(params).toEqual(undefined)
           expect(Array.from(data.keys())).toEqual(['files[]'])
           expect(withCredentials).toEqual(true)
         })
@@ -216,7 +244,7 @@ describe('adapter', () => {
             'Content-Type': 'application/json;charset=utf-8',
             'SomeHeader': 'test'
           })
-          expect(params).toEqual(null)
+          expect(params).toEqual(undefined)
           expect(data).toEqual('{"name":"paco"}')
           expect(withCredentials).toEqual(true)
         })
@@ -267,7 +295,7 @@ describe('adapter', () => {
             'Content-Type': 'application/json;charset=utf-8',
             'SomeHeader': 'test'
           })
-          expect(params).toEqual(null)
+          expect(params).toEqual(undefined)
           expect(data).toEqual('{"name":"paco"}')
           expect(withCredentials).toEqual(true)
         })
@@ -317,7 +345,7 @@ describe('adapter', () => {
             'Content-Type': 'application/json;charset=utf-8',
             'SomeHeader': 'test'
           })
-          expect(params).toEqual(null)
+          expect(params).toEqual(undefined)
           expect(data).toEqual('{"name":"paco"}')
           expect(withCredentials).toEqual(true)
         })

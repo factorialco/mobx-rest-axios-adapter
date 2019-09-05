@@ -2,7 +2,14 @@ function isFile(val) {
   return val instanceof File
 }
 
-export default function buildFormData (data: { [key: string]: any } | null) {
+type Payload = {
+  hasFile: boolean,
+  formData: FormData | null
+}
+
+export default function buildFormData (data: { [key: string]: any } | null): Payload {
+  if (!data) return { hasFile: false, formData: null }
+
   const formData = new FormData()
   let hasFile = false
 

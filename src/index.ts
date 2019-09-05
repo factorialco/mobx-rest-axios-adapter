@@ -16,34 +16,37 @@ type Options = {
 }
 
 function ajaxOptions (options: Options): {} {
-  const { hasFile, formData } = buildFormData(options.data)
   const baseOptions = {
     method: options.method,
     headers: options.headers,
-    withCredentials: options.withCredentials,
-    params: null,
-    data: null
+    withCredentials: options.withCredentials
   }
 
   if (options.method === 'GET') {
-    baseOptions.params = options.data
-  } else {
-    baseOptions.data = options.data
-  }
-
-  if (hasFile) {
     return {
       ...baseOptions,
-      data: formData,
-      onUploadProgress: (prog) => {
-        if (options.onProgress) {
-          const progress = Math.ceil((prog.loaded / prog.total) * 100)
-          options.onProgress(progress || 100)
-        }
-      }
+      params: options.data
     }
   } else {
-    return baseOptions
+    const { hasFile, formData } = buildFormData(options.data)
+
+    if (hasFile) {
+      return {
+        ...baseOptions,
+        data: formData,
+        onUploadProgress: (prog) => {
+          if (options.onProgress) {
+            const progress = Math.ceil((prog.loaded / prog.total) * 100)
+            options.onProgress(progress || 100)
+          }
+        }
+      }
+    } else {
+      return {
+        ...baseOptions,
+        data: options.data
+      }
+    }
   }
 }
 
