@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.3
+
+Fixed error handling when no response was returned
+
 ## 0.0.2
 
 Fixed form data being broken when no data was passed.
