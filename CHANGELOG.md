@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.0
+
+Fixed `abort()` not resolving the promise
+
 ## 0.0.3
 
 Fixed error handling when no response was returned

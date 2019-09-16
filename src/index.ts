@@ -64,7 +64,7 @@ function ajax (url: string, options: Options): Request {
     request
       .then(response => resolve(response.data))
       .catch(error => {
-        if (axios.isCancel(error)) return
+        if (axios.isCancel(error)) return resolve({})
 
         const json = (error.response && error.response.data) || {}
         return reject(json.errors || {})
