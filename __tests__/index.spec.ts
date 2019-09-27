@@ -25,7 +25,7 @@ describe('adapter', () => {
         const { abort, promise } = adapter.get('/users', {})
         expect(abort).toBeTruthy()
 
-        return expect(promise).rejects.toEqual({})
+        return expect(promise).rejects.toEqual(new Error('Request failed with status code 500'))
       })
     })
   })
