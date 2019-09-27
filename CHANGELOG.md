@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1
+
+Fixed ajax errors not forwarding correctly if they are not response-like.
+
 ## 0.1.0
 
 Fixed `abort()` not resolving the promise
