@@ -12,6 +12,7 @@ export default {
     typescript()
   ],
   external: [
-    'axios'
+    'axios',
+    'qs'
   ]
 }

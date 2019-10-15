@@ -1,5 +1,5 @@
 import axios from 'axios'
-import qs from 'qs'
+import { stringify } from 'qs'
 import buildFormData from './buildFormData'
 
 type Request = {
@@ -81,9 +81,8 @@ export default {
   get (path: string, data: {} | null, options: {} = {}): Request {
     const baseUrl = `${this.apiPath}${path}`
     const url = Object.entries(data).length
-      ? `${baseUrl}?${qs.stringify(data)}`
+      ? `${baseUrl}?${stringify(data)}`
       : baseUrl
-    console.log(url, data)
 
     return ajax(url, {
       method: 'GET',
