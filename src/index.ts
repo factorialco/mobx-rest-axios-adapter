@@ -80,7 +80,7 @@ export default {
 
   get (path: string, data: {} | null, options: {} = {}): Request {
     const baseUrl = `${this.apiPath}${path}`
-    const url = Object.entries(data).length
+    const url = Object.entries(data || {}).length
       ? `${baseUrl}?${stringify(data)}`
       : baseUrl
 

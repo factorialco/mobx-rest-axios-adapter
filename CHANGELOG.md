@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3
+
+Fixed GET requests not doing the parameter nesting properly.
+
 ## 0.1.2
 
 Fixed GET requests not doing the parameter nesting properly.
