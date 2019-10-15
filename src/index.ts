@@ -1,4 +1,5 @@
 import axios from 'axios'
+import qs from 'qs'
 import buildFormData from './buildFormData'
 
 type Request = {
@@ -23,10 +24,7 @@ function ajaxOptions (options: Options): {} {
   }
 
   if (options.method === 'GET') {
-    return {
-      ...baseOptions,
-      params: options.data
-    }
+    return baseOptions
   } else {
     const { hasFile, formData } = buildFormData(options.data)
 
@@ -81,9 +79,14 @@ export default {
   commonOptions: {},
 
   get (path: string, data: {} | null, options: {} = {}): Request {
-    return ajax(`${this.apiPath}${path}`, {
+    const baseUrl = `${this.apiPath}${path}`
+    const url = Object.entries(data).length
+      ? `${baseUrl}?${qs.stringify(data)}`
+      : baseUrl
+    console.log(url, data)
+
+    return ajax(url, {
       method: 'GET',
-      data,
       ...this.commonOptions,
       ...options
     })

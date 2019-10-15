@@ -41,7 +41,7 @@ describe('adapter', () => {
       const values = { id: 1, name: 'paco' }
 
       beforeEach(() => {
-        mock.onGet('/api/users').reply(200, values)
+        mock.onGet('/api/users?manager_id=2').reply(200, values)
         action()
       })
 
@@ -56,7 +56,6 @@ describe('adapter', () => {
             'Accept': 'application/json, text/plain, */*',
             'SomeHeader': 'test'
           })
-          expect(params).toEqual({ manager_id: 2 })
           expect(data).toEqual(undefined)
           expect(withCredentials).toEqual(true)
         })
@@ -67,7 +66,7 @@ describe('adapter', () => {
       const values = '{"errors": ["foo"]}'
 
       beforeEach(() => {
-        mock.onGet('/api/users').reply(500, values)
+        mock.onGet('/api/users?manager_id=2').reply(500, values)
         action()
       })
 

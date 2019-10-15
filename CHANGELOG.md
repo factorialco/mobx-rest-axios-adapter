@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2
+
+Fixed GET requests not doing the parameter nesting properly.
+
 ## 0.1.1
 
 Fixed ajax errors not forwarding correctly if they are not response-like.
