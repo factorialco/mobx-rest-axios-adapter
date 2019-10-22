@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4
+
+Fixed GET requests not formating array parameters in the `param[]=value` style.
+
 ## 0.1.3
 
 Fixed GET requests not doing the parameter nesting properly.

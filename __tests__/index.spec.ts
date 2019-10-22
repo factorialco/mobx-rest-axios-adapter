@@ -34,14 +34,14 @@ describe('adapter', () => {
     let ret
 
     const action = () => {
-      ret = adapter.get('/users', { manager_id: 2 })
+      ret = adapter.get('/users', { manager_id: [2] })
     }
 
     describe('when it resolves', () => {
       const values = { id: 1, name: 'paco' }
 
       beforeEach(() => {
-        mock.onGet('/api/users?manager_id=2').reply(200, values)
+        mock.onGet('/api/users?manager_id%5B%5D=2').reply(200, values)
         action()
       })
 
@@ -66,7 +66,7 @@ describe('adapter', () => {
       const values = '{"errors": ["foo"]}'
 
       beforeEach(() => {
-        mock.onGet('/api/users?manager_id=2').reply(500, values)
+        mock.onGet('/api/users?manager_id%5B%5D=2').reply(500, values)
         action()
       })
 
