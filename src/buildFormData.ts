@@ -7,6 +7,10 @@ type Payload = {
   formData: FormData | null
 }
 
+const isPlainObject = (obj: any) => {
+  return typeof obj === 'object' && obj.constructor === Object
+}
+
 export default function buildFormData (data: { [key: string]: any } | null): Payload {
   if (!data) return { hasFile: false, formData: null }
 
@@ -24,7 +28,15 @@ export default function buildFormData (data: { [key: string]: any } | null): Pay
     const val = data[attr]
 
     if (Array.isArray(val)) {
-      val.forEach(nestedVal => appendFile(`${attr}[]`, nestedVal))
+      val.forEach(function (nestedVal, index) {
+        if (isPlainObject(nestedVal)) {
+          for (const prop in nestedVal) {
+            appendFile(`${attr}[${index}][${prop}]`, nestedVal[prop])
+          }
+        } else {
+          appendFile(attr + "[]", nestedVal);
+        }
+      });
     } else {
       appendFile(attr, val)
     }

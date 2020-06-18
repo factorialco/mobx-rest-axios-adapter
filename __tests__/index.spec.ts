@@ -213,6 +213,34 @@ describe('adapter', () => {
         })
       })
     })
+
+    describe('when an array of objects and file is sent is sent', () => {
+      const values = { id: 1, objectArray: [{ foo: 'bar' }, { foo: 'baz' }] }
+
+      beforeEach(() => {
+        data = { objectArray: [{ foo: 'bar' }, { foo: 'baz' }], files: [new File([''], 'filename')] }
+        mock.onPost('/api/users').reply(200, values)
+        action()
+      })
+
+      it('sends a xhr request with data parameters', () => {
+        expect(ret.abort).toBeTruthy()
+
+        return ret.promise.then((vals) => {
+          expect(vals).toEqual(values)
+
+          const { params, data, headers, withCredentials } = getLastRequest('post')
+          expect(headers).toEqual({
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'SomeHeader': 'test'
+          })
+          expect(params).toEqual(undefined)
+          expect(Array.from(data.keys())).toEqual(['objectArray[0][foo]', 'objectArray[1][foo]', 'files[]'])
+          expect(withCredentials).toEqual(true)
+        })
+      })
+    })
   })
 
   describe('put', () => {
