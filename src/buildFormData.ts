@@ -1,5 +1,3 @@
-import { isPlainObject } from 'lodash'
-
 function isFile(val) {
   return val instanceof File
 }
@@ -7,6 +5,10 @@ function isFile(val) {
 type Payload = {
   hasFile: boolean,
   formData: FormData | null
+}
+
+const isPlainObject = (obj: any) => {
+  return typeof obj === 'object' && obj.constructor === Object
 }
 
 export default function buildFormData (data: { [key: string]: any } | null): Payload {
