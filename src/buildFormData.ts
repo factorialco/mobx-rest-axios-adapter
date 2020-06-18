@@ -1,3 +1,5 @@
+import { isPlainObject } from 'lodash'
+
 function isFile(val) {
   return val instanceof File
 }
@@ -24,7 +26,15 @@ export default function buildFormData (data: { [key: string]: any } | null): Pay
     const val = data[attr]
 
     if (Array.isArray(val)) {
-      val.forEach(nestedVal => appendFile(`${attr}[]`, nestedVal))
+      val.forEach(function (nestedVal, index) {
+        if (isPlainObject(nestedVal)) {
+          for (const prop in nestedVal) {
+            appendFile(`${attr}[${index}][${prop}]`, nestedVal[prop])
+          }
+        } else {
+          appendFile(attr + "[]", nestedVal);
+        }
+      });
     } else {
       appendFile(attr, val)
     }
