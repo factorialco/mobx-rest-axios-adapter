@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.5
+
+Build FormData properly when sending an array of objects
+
 ## 0.1.4
 
 Fixed GET requests not formating array parameters in the `param[]=value` style.
