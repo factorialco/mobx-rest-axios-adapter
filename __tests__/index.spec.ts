@@ -186,6 +186,40 @@ describe('adapter', () => {
       })
     })
 
+    describe('when it contains an attribute with name, uri and type', () => {
+      const values = { id: 1, avatar: 'lol.png' }
+
+      beforeEach(() => {
+        data = {
+          avatar: {
+            uri: 'some://uri/lol.png',
+            name: 'filename',
+            type: 'image/png'
+          }
+        }
+        mock.onPost('/api/users').reply(200, values)
+        action()
+      })
+
+      it('sends a xhr request with data parameters', () => {
+        expect(ret.abort).toBeTruthy()
+
+        return ret.promise.then((vals) => {
+          expect(vals).toEqual(values)
+
+          const { params, data, headers, withCredentials } = getLastRequest('post')
+          expect(headers).toEqual({
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'SomeHeader': 'test'
+          })
+          expect(params).toEqual(undefined)
+          expect(Array.from(data.keys())).toEqual(['avatar'])
+          expect(withCredentials).toEqual(true)
+        })
+      })
+    })
+
     describe('when it contains an array of files', () => {
       const values = [{ id: 1, avatar: 'lol.png' }]
 

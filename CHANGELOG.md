@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.6
+
+Consider params with keys `uri`, `name` and `type` as Files to build FormData requests.
+
 ## 0.1.5
 
 Build FormData properly when sending an array of objects
