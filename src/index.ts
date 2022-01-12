@@ -2,11 +2,6 @@ import axios from 'axios'
 import { stringify } from 'qs'
 import buildFormData from './buildFormData'
 
-type Request = {
-  abort: () => void;
-  promise: Promise<any>;
-}
-
 type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
 type Options = {
   method: Method;
@@ -48,7 +43,7 @@ function ajaxOptions (options: Options): {} {
   }
 }
 
-function ajax (url: string, options: Options): Request {
+function ajax (url: string, options: Options): Promise<any> {
   const CancelToken = axios.CancelToken
   const source = CancelToken.source()
 
@@ -58,7 +53,7 @@ function ajax (url: string, options: Options): Request {
     ...ajaxOptions(options)
   })
 
-  const promise = new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     request
       .then(response => resolve(response.data))
       .catch(error => {
@@ -68,17 +63,13 @@ function ajax (url: string, options: Options): Request {
         return reject(json.errors || error)
       })
   })
-
-  const abort = () => source.cancel()
-
-  return { abort, promise }
 }
 
 export default {
   apiPath: '',
   commonOptions: {},
 
-  get (path: string, data: {} | null, options: {} = {}): Request {
+  get (path: string, data: {} | null, options: {} = {}): Promise<any> {
     const baseUrl = `${this.apiPath}${path}`
     const url = Object.entries(data || {}).length
       ? `${baseUrl}?${stringify(data, { arrayFormat: 'brackets' })}`
@@ -91,7 +82,7 @@ export default {
     })
   },
 
-  post (path: string, data: {} | null, options: {} = {}): Request {
+  post (path: string, data: {} | null, options: {} = {}): Promise<any> {
     return ajax(`${this.apiPath}${path}`, {
       method: 'POST',
       data,
@@ -100,7 +91,7 @@ export default {
     })
   },
 
-  put (path: string, data: {} | null, options: {} = {}): Request {
+  put (path: string, data: {} | null, options: {} = {}): Promise<any> {
     return ajax(`${this.apiPath}${path}`, {
       method: 'PUT',
       data,
@@ -109,7 +100,7 @@ export default {
     })
   },
 
-  patch (path: string, data: {} | null, options: {} = {}): Request {
+  patch (path: string, data: {} | null, options: {} = {}): Promise<any> {
     return ajax(`${this.apiPath}${path}`, {
       method: 'PATCH',
       data,
@@ -118,7 +109,7 @@ export default {
     })
   },
 
-  del (path: string, data: {} | null, options: {} = {}): Request {
+  del (path: string, data: {} | null, options: {} = {}): Promise<any> {
     return ajax(`${this.apiPath}${path}`, {
       method: 'DELETE',
       data,
