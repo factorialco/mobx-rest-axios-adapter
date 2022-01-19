@@ -2,7 +2,7 @@ function isFile(val) {
   if (val instanceof File) return true
 
   const fileKeys = ['uri', 'name', 'type']
-  if (fileKeys.every(_key => val.hasOwnProperty(_key))) return true
+  if (fileKeys.every(_key => val && val.hasOwnProperty(_key))) return true
 
   return false
 }
