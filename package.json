@@ -11,8 +11,8 @@
     "preset": "ts-jest"
   },
   "dependencies": {
-    "axios": "0.21.1",
-    "qs": "6.9.0"
+    "axios": "0.26.0",
+    "qs": "6.10.3"
   },
   "devDependencies": {
     "@types/jest": "24.0.13",

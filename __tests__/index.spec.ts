@@ -97,7 +97,7 @@ describe('adapter', () => {
           const { params, data, headers, withCredentials } = getLastRequest('post')
           expect(headers).toEqual({
             'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json;charset=utf-8',
+            'Content-Type': 'application/json',
             'SomeHeader': 'test'
           })
           expect(params).toEqual(undefined)
@@ -281,7 +281,7 @@ describe('adapter', () => {
           const { params, data, headers, withCredentials } = getLastRequest('put')
           expect(headers).toEqual({
             'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json;charset=utf-8',
+            'Content-Type': 'application/json',
             'SomeHeader': 'test'
           })
           expect(params).toEqual(undefined)
@@ -328,7 +328,7 @@ describe('adapter', () => {
           const { params, data, headers, withCredentials } = getLastRequest('patch')
           expect(headers).toEqual({
             'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json;charset=utf-8',
+            'Content-Type': 'application/json',
             'SomeHeader': 'test'
           })
           expect(params).toEqual(undefined)
@@ -374,7 +374,7 @@ describe('adapter', () => {
           const { params, data, headers, withCredentials } = getLastRequest('delete')
           expect(headers).toEqual({
             'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json;charset=utf-8',
+            'Content-Type': 'application/json',
             'SomeHeader': 'test'
           })
           expect(params).toEqual(undefined)
