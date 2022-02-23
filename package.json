@@ -40,13 +40,13 @@
     "prepublish": "yarn build",
     "prepush": "yarn test",
     "test": "yarn lint && yarn jest",
-    "watch": "rollup --config -w",
-    "lint-staged": {
-      "linters": {
-        "{src|__tests__}/**/*.ts": [
-          "git add"
-        ]
-      }
+    "watch": "rollup --config -w"
+  },
+  "lint-staged": {
+    "linters": {
+      "{src|__tests__}/**/*.ts": [
+        "git add"
+      ]
     }
   }
 }
