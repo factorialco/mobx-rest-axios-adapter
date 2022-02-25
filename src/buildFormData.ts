@@ -1,4 +1,4 @@
-function isFile(val) {
+function isFile(val: string | Blob | undefined) {
   if (val instanceof File) return true
 
   const fileKeys = ['uri', 'name', 'type']
@@ -22,11 +22,13 @@ export default function buildFormData (data: { [key: string]: any } | null): Pay
   const formData = new FormData()
   let hasFile = false
 
-  function appendFile (attr, val) {
+  function appendFile (attr: string, val: string | Blob | undefined) {
     if (val === null) return
 
     hasFile = hasFile || isFile(val)
-    formData.append(attr, val)
+    if (val !== undefined) {
+      formData.append(attr, val)
+    }
   }
 
   for (const attr of Object.keys(data)) {

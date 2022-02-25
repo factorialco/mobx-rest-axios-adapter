@@ -6,7 +6,7 @@ type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
 type Options = {
   method: Method;
   headers?: { [key: string]: string } | null;
-  withCredentials: boolean;
+  withCredentials?: boolean;
   onProgress?: (num: number) => void;
   data?: { [key: string]: any } | null;
 }
@@ -21,13 +21,13 @@ function ajaxOptions (options: Options): {} {
   if (options.method === 'GET') {
     return baseOptions
   } else {
-    const { hasFile, formData } = buildFormData(options.data)
+    const { hasFile, formData } = buildFormData(options.data ?? {})
 
     if (hasFile) {
       return {
         ...baseOptions,
         data: formData,
-        onUploadProgress: (prog) => {
+        onUploadProgress: (prog: ProgressEvent) => {
           if (options.onProgress) {
             const progress = Math.ceil((prog.loaded / prog.total) * 100)
             options.onProgress(progress || 100)

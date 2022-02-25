@@ -10,7 +10,7 @@ adapter.commonOptions = {
   withCredentials: true
 }
 
-function getLastRequest (verb) {
+function getLastRequest (verb: string) {
   const requests = mock.history[verb]
 
   return requests[requests.length - 1]
@@ -30,7 +30,7 @@ describe('adapter', () => {
   })
 
   describe('get', () => {
-    let promise
+    let promise: Promise<any>
 
     const action = () => {
       promise = adapter.get('/users', { manager_id: [2] })
@@ -45,7 +45,7 @@ describe('adapter', () => {
       })
 
       it('sends a xhr request with data parameters', () => {
-        return promise.then((vals) => {
+        return promise.then((vals: any) => {
           expect(vals).toEqual(values)
 
           const { params, data, headers, withCredentials } = getLastRequest('get')
@@ -74,8 +74,8 @@ describe('adapter', () => {
   })
 
   describe('post', () => {
-    let promise
-    let data
+    let promise: Promise<any>
+    let data: {} | null
 
     const action = () => {
       promise = adapter.post('/users', data)
@@ -91,13 +91,13 @@ describe('adapter', () => {
       })
 
       it('sends a xhr request with data parameters', () => {
-        return promise.then((vals) => {
+        return promise.then((vals: any) => {
           expect(vals).toEqual(values)
 
           const { params, data, headers, withCredentials } = getLastRequest('post')
           expect(headers).toEqual({
             'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json;charset=utf-8',
+            'Content-Type': 'application/json',
             'SomeHeader': 'test'
           })
           expect(params).toEqual(undefined)
@@ -125,13 +125,13 @@ describe('adapter', () => {
       const values = { id: 1, avatar: 'lol.png' }
 
       beforeEach(() => {
-        data = undefined
+        data = null
         mock.onPost('/api/users').reply(200, values)
         action()
       })
 
       it('sends a xhr request with data parameters', () => {
-        return promise.then((vals) => {
+        return promise.then((vals: any) => {
           expect(vals).toEqual(values)
 
           const { params, data, headers, withCredentials } = getLastRequest('post')
@@ -141,7 +141,7 @@ describe('adapter', () => {
             'SomeHeader': 'test'
           })
           expect(params).toEqual(undefined)
-          expect(data).toEqual(undefined)
+          expect(data).toEqual(null)
           expect(withCredentials).toEqual(true)
         })
       })
@@ -157,7 +157,7 @@ describe('adapter', () => {
       })
 
       it('sends a xhr request with data parameters', () => {
-        return promise.then((vals) => {
+        return promise.then((vals: any) => {
           expect(vals).toEqual(values)
 
           const { params, data, headers, withCredentials } = getLastRequest('post')
@@ -189,7 +189,7 @@ describe('adapter', () => {
       })
 
       it('sends a xhr request with data parameters', () => {
-        return promise.then((vals) => {
+        return promise.then((vals: any) => {
           expect(vals).toEqual(values)
 
           const { params, data, headers, withCredentials } = getLastRequest('post')
@@ -215,7 +215,7 @@ describe('adapter', () => {
       })
 
       it('sends a xhr request with data parameters', () => {
-        return promise.then((vals) => {
+        return promise.then((vals: any) => {
           expect(vals).toEqual(values)
 
           const { params, data, headers, withCredentials } = getLastRequest('post')
@@ -241,7 +241,7 @@ describe('adapter', () => {
       })
 
       it('sends a xhr request with data parameters', () => {
-        return promise.then((vals) => {
+        return promise.then((vals: any) => {
           expect(vals).toEqual(values)
 
           const { params, data, headers, withCredentials } = getLastRequest('post')
@@ -259,7 +259,7 @@ describe('adapter', () => {
   })
 
   describe('put', () => {
-    let promise
+    let promise: Promise<any>
     const data = { name: 'paco' }
 
     const action = () => {
@@ -275,13 +275,13 @@ describe('adapter', () => {
       })
 
       it('sends a xhr request with data parameters', () => {
-        return promise.then((vals) => {
+        return promise.then((vals: any) => {
           expect(vals).toEqual(values)
 
           const { params, data, headers, withCredentials } = getLastRequest('put')
           expect(headers).toEqual({
             'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json;charset=utf-8',
+            'Content-Type': 'application/json',
             'SomeHeader': 'test'
           })
           expect(params).toEqual(undefined)
@@ -306,7 +306,7 @@ describe('adapter', () => {
   })
 
   describe('patch', () => {
-    let promise
+    let promise: Promise<any>
     const data = { name: 'paco' }
 
     const action = () => {
@@ -322,13 +322,13 @@ describe('adapter', () => {
       })
 
       it('sends a xhr request with data parameters', () => {
-        return promise.then((vals) => {
+        return promise.then((vals: any) => {
           expect(vals).toEqual(values)
 
           const { params, data, headers, withCredentials } = getLastRequest('patch')
           expect(headers).toEqual({
             'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json;charset=utf-8',
+            'Content-Type': 'application/json',
             'SomeHeader': 'test'
           })
           expect(params).toEqual(undefined)
@@ -353,7 +353,7 @@ describe('adapter', () => {
   })
 
   describe('del', () => {
-    let promise
+    let promise: Promise<any>
 
     const action = () => {
       promise = adapter.del('/users', { name: 'paco' })
@@ -368,13 +368,13 @@ describe('adapter', () => {
       })
 
       it('sends a xhr request with data parameters', () => {
-        return promise.then((vals) => {
+        return promise.then((vals: any) => {
           expect(vals).toEqual(values)
 
           const { params, data, headers, withCredentials } = getLastRequest('delete')
           expect(headers).toEqual({
             'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json;charset=utf-8',
+            'Content-Type': 'application/json',
             'SomeHeader': 'test'
           })
           expect(params).toEqual(undefined)
