@@ -53,16 +53,17 @@ function ajax (url: string, options: Options): Promise<any> {
     ...ajaxOptions(options)
   })
 
-  return new Promise((resolve, reject) => {
-    request
-      .then(response => resolve(response.data))
-      .catch(error => {
-        if (axios.isCancel(error)) return resolve({})
+  return request.then(response => response.data);
+  // return new Promise((resolve, reject) => {
+  //   request
+  //     .then(response => resolve(response.data))
+  //     .catch(error => {
+  //       if (axios.isCancel(error)) return resolve({})
 
-        const json = (error.response && error.response.data) || {}
-        return reject(json.errors || error)
-      })
-  })
+  //       const json = (error.response && error.response.data) || {}
+  //       return reject(json.errors || error)
+  //     })
+  // })
 }
 
 export default {
